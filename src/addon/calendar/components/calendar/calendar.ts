@@ -119,7 +119,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
 
         this.calculateIsCurrentMonth();
 
-        this.fetchData();
+        this.refreshCalendar();
     }
 
     /**
@@ -142,6 +142,19 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
                 this.filterEvents();
             }
         }
+    }
+
+    /**
+     * Refresh calendar by interval time.
+     */
+    refreshCalendar(): void {
+        this.refreshData(false);
+
+        // Calendar sync every 10000 miliseconds
+        const timer = setInterval(() => {
+            clearInterval(timer);
+            this.refreshCalendar();
+        }, 10000);
     }
 
     /**
